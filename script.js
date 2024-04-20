@@ -25,8 +25,9 @@ function cookieF() {
     console.log(document.cookie)
 }
 function displayObj(objects, toD) {
+    console.log(objects)
     for (let i = 0; i < objects.length; i++) {
-        objects[i].style.display = toD
+        objects[i].style.display = "none"
     }
 }
 cookieF()

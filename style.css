@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 * {
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 10px;
 }
 
 body {
@@ -14,10 +14,12 @@ body {
     align-items: center;
 }
 
-text {
+.text {
     font-size: 20px;
 }
-
+.bigText {
+    font-size: 48px;
+}
 .var {
     height: 30px;
     width: 100%;
@@ -28,4 +30,11 @@ text {
 .variants {
     display: flex;
     justify-content: space-evenly;
+}
+input::placeholder {
+    font-size: 40px;
+}
+input{
+    width: 80%;
+    min-height: 50px;
 }
