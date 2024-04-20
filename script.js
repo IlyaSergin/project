@@ -3,9 +3,9 @@ let mainq = document.querySelector(".ques")
 let stat = document.querySelector(".stat")
 let start = document.querySelector(".start")
 let base = document.querySelector(".base")
-stat.style.display = "none"
-base.style.display = "none"
-
+let mainInput = document.querySelector(".mainInput")
+let split1 = document.querySelector(".split1")
+let split2 = document.querySelector(".split2")
 let thisQ
 let rightA = 0
 let allA = 0
@@ -23,6 +23,11 @@ function cookieF() {
         document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
     }
     console.log(document.cookie)
+}
+function displayObj(objects, toD) {
+    for (let i = 0; i < objects.length; i++) {
+        objects[i].style.display = toD
+    }
 }
 cookieF()
 function rand(min, max) {
@@ -51,7 +56,7 @@ function displayStat() {
 }
 class QUESTION {
     constructor() {
-        shuffle(this.vars)
+        this.vars = shuffle(this.vars)
     }
     displayques() {
         mainq.innerHTML = this.ques;
@@ -60,6 +65,9 @@ class QUESTION {
         }
     }
 }
+
+displayObj([base, start, stat, mainq], "none")
+
 thisQ = new QUESTION()
 thisQ.displayques()
 for (let i = 0; i < butts.length; i++) {
