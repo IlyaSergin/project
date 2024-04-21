@@ -10,7 +10,7 @@ body {
     font-family: 'Montserrat';
     font-size: 48px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
 }

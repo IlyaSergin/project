@@ -11,6 +11,7 @@ let rightA = 0
 let allA = 0
 let allCookie = document.cookie.split("; ")
 let cookieflag = false
+
 function cookieF() {
     allCookie = document.cookie.split("; ")
     for (let i = 0; i < allCookie.length; i++) {
@@ -35,9 +36,16 @@ function rand(min, max) {
     return Math.round(Math.random() * (max - min) + min)
 }
 start.addEventListener("click", function () {
-    base.style.display = "flex"
-    start.style.display = "none"
-    stat.style.display = "none"
+    //console.log(split1.value + split2.value)
+    let textArray = mainInput.value
+    //let split_2 = split2.value
+    //textArray = textArray.split(`${split_2}`)
+    textArray = textArray.split("\n")
+    console.log(textArray)
+    for (let i = 0; i < textArray.length; i++) {
+        textArray[i] = textArray[i].split(split1.value)
+    }
+    console.log(textArray)
 })
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
@@ -67,8 +75,8 @@ class QUESTION {
     }
 }
 
-displayObj([base, start, stat, mainq], "none")
-
+displayObj([base, stat, mainq], "none")
+/*
 thisQ = new QUESTION()
 thisQ.displayques()
 for (let i = 0; i < butts.length; i++) {
@@ -77,3 +85,4 @@ for (let i = 0; i < butts.length; i++) {
     }
     )
 }
+*/
