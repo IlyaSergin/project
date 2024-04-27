@@ -11,7 +11,8 @@ let rightA = 0
 let allA = 0
 let allCookie = document.cookie.split("; ")
 let cookieflag = false
-
+let textArray = []
+let time = 999999999
 function cookieF() {
     allCookie = document.cookie.split("; ")
     for (let i = 0; i < allCookie.length; i++) {
@@ -37,7 +38,7 @@ function rand(min, max) {
 }
 start.addEventListener("click", function () {
     //console.log(split1.value + split2.value)
-    let textArray = mainInput.value
+    textArray = mainInput.value
     //let split_2 = split2.value
     //textArray = textArray.split(`${split_2}`)
     textArray = textArray.split("\n")
@@ -46,6 +47,10 @@ start.addEventListener("click", function () {
         textArray[i] = textArray[i].split(split1.value)
     }
     console.log(textArray)
+    displayObj([mainInput, start, split1], "none")
+    displayObj([base], "block")
+    time = 1
+    return textArray;
 })
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
@@ -65,24 +70,46 @@ function displayStat() {
 }
 class QUESTION {
     constructor() {
-        this.vars = shuffle(this.vars)
+        this.randI = 0
+        this.txtA = textArray
+        this.randV = []
     }
     displayques() {
-        mainq.innerHTML = this.ques;
-        for (let i = 0; i < 4; i++) {
-            butts[i].innerHTML = this.vars[i]
+        this.randI = Math.floor(Math.random() * this.txtA.length)
+        mainq.innerHTML = this.txtA[this.randI][0]
+        this.randV = [this.txtA[this.randI][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1]]
+        shuffle(this.randV)
+        for (let i = 0; i < butts.length; i++) {
+            butts[i].innerHTML = this.randV[i]
         }
     }
 }
 
-displayObj([base, stat, mainq], "none")
-/*
+displayObj([base, stat, mainq, split2], "none")
+setTimeout(function () { thisQ.displayques() }, time) 
 thisQ = new QUESTION()
-thisQ.displayques()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
-
+        if (butts[i].innerHTML == thisQ.textArray[thisQ.randI][1]){
+            rightA ++
+        }
+        allA++
+        thisQ.displayques()
     }
     )
 }
+
+/*
+
+a - b
+c - d
+e - f
+g - h
+i - j
+k - l
+m - n
+o - p
+
+
+
 */
