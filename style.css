@@ -13,6 +13,7 @@ body {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
+    background-color: rgb(255, 149, 0);
 }
 
 .text {
@@ -37,18 +38,32 @@ body {
 
 input::placeholder {
     font-size: 40px;
+    padding: 10px 0px 0px 10px;
 }
 
 input {
-    width: 80%;
+    width: 98%;
     min-height: 50px;
+    border-radius: 25px;
 }
 
 textarea::placeholder {
     font-size: 40px;
+    padding: 10px 0px 0px 10px;
 }
 
 textarea {
-    width: 80%;
+    width: 98%;
     min-height: 50px;
+    border-radius: 25px;
+}
+.all{
+    max-width: 95%;
+    border-radius: 25px;
+    background-color: whitesmoke;
+    margin-top: 5px;
+    justify-content: center;
+}
+.start{
+    text-align: center;
 }
