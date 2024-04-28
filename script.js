@@ -12,7 +12,9 @@ let allA = 0
 let allCookie = document.cookie.split("; ")
 let cookieflag = false
 let textArray = []
-let time = 999999999
+
+
+// this function is for coockies
 function cookieF() {
     allCookie = document.cookie.split("; ")
     for (let i = 0; i < allCookie.length; i++) {
@@ -24,34 +26,25 @@ function cookieF() {
     if (cookieflag == false) {
         document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
     }
-    console.log(document.cookie)
 }
+cookieF()
+
+
+
+// this function changes display style for objects in brackets
 function displayObj(objects, toD) {
-    console.log(objects)
     for (let i = 0; i < objects.length; i++) {
         objects[i].style.display = "none"
     }
 }
-cookieF()
+
+
+
+// random functions
 function rand(min, max) {
     return Math.round(Math.random() * (max - min) + min)
 }
-start.addEventListener("click", function () {
-    //console.log(split1.value + split2.value)
-    textArray = mainInput.value
-    //let split_2 = split2.value
-    //textArray = textArray.split(`${split_2}`)
-    textArray = textArray.split("\n")
-    console.log(textArray)
-    for (let i = 0; i < textArray.length; i++) {
-        textArray[i] = textArray[i].split(split1.value)
-    }
-    console.log(textArray)
-    displayObj([mainInput, start, split1], "none")
-    displayObj([base], "block")
-    time = 1
-    return textArray;
-})
+
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
     while (currentIndex != 0) {
@@ -62,36 +55,83 @@ function shuffle(array) {
     }
     return array;
 }
+
+
+
+//this function is for inputs
+start.addEventListener("click", function () {
+    //console.log(split1.value + split2.value)
+    //   textArray = mainInput.value
+    textArray = "a - b\nc - d\ne - f\ng - h\ni - j\nk - l\nm - n\no - p"
+    //let split_2 = split2.value
+    //textArray = textArray.split(`${split_2}`)
+    textArray = textArray.split("\n")
+    console.log(textArray)
+    for (let i = 0; i < textArray.length; i++) {
+        textArray[i] = textArray[i].split(split1.value)
+    }
+    console.log(textArray)
+    displayObj([mainInput, start, split1], "none")
+    displayObj([base], "flex")
+    base.style.display = "flex"
+    thisQ.displayques();
+    return textArray;
+})
+
+
+
+//this function display statistics
 function displayStat() {
-    stat.style.display = "block"
     stat.innerHTML = `Ваш результат: ${Math.round(rightA / allA * 100)}% \n Правильно: ${rightA} из ${allA}`
-    start.style.display = "block"
     start.innerHTML = "НАЧАТЬ"
+    displayObj([stat, start], "block")
 }
+
+
+//this is a class for question
 class QUESTION {
     constructor() {
         this.randI = 0
         this.txtA = textArray
         this.randV = []
+        this.oldAnswers = []
+        this.oldQuestions = []
+        this.newAns = 0
     }
     displayques() {
-        this.randI = Math.floor(Math.random() * this.txtA.length)
-        mainq.innerHTML = this.txtA[this.randI][0]
-        this.randV = [this.txtA[this.randI][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1], this.txtA[Math.floor(Math.random() * this.txtA.length)][1]]
+        let i = 0
+        while (i != 1) {
+            this.randI = Math.floor(Math.random() * this.txtA.length)
+            if (this.oldQuestions.includes(this.randI) == false) {
+                mainq.innerHTML = this.txtA[this.randI][0]
+                this.oldQuestions.push(this.randI)
+            i = 1
+            }
+        }
+        i = 0
+        this.randV = [this.txtA[this.randI][1]]
+        while (i != 3) {
+            this.newAns = Math.floor(Math.random() * this.txtA.length)
+            if (this.oldAnswers.includes(this.txtA[this.newAns][1]) == false) {
+                this.randV.push(this.txtA[this.newAns][1])
+                this.oldAnswers.push(this.txtA[this.newAns][1])
+                i++
+            }
+        }
         shuffle(this.randV)
         for (let i = 0; i < butts.length; i++) {
             butts[i].innerHTML = this.randV[i]
         }
+        console.log(randV)
     }
 }
 
-displayObj([base, stat, mainq, split2], "none")
-setTimeout(function () { thisQ.displayques() }, time) 
+displayObj([base, stat, split2], "none")
 thisQ = new QUESTION()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
-        if (butts[i].innerHTML == thisQ.textArray[thisQ.randI][1]){
-            rightA ++
+        if (butts[i].innerHTML == thisQ.textArray[thisQ.randI][1]) {
+            rightA++
         }
         allA++
         thisQ.displayques()
