@@ -31,6 +31,48 @@ cookieF()
 
 
 
+//this is a class for question
+class QUESTION {
+    constructor() {
+        this.randI = 0
+        this.randV = []
+        this.oldAnswers = []
+        this.oldQuestions = []
+        this.newAns = 0
+    }
+    displayques() {
+        this.randI = 0
+        this.randV = []
+        this.oldAnswers = []
+        this.newAns = 0
+        let i = 0
+        while (i != 1) {
+            this.randI = Math.round(Math.random() * (textArray.length - 1))
+            if (this.oldQuestions.includes(this.randI) == false) {
+                mainq.innerHTML = textArray[this.randI][0]
+                this.oldQuestions.push(this.randI)
+                i = 1
+            }
+        }
+        i = 0
+        this.randV = [textArray[this.randI][1]]
+        this.oldAnswers.push(textArray[this.randI][1])
+        while (i != 3) {
+            this.newAns = Math.round(Math.random() * (textArray.length - 1))
+            if (this.oldAnswers.includes(textArray[this.newAns][1]) == false) {
+                this.randV.push(textArray[this.newAns][1])
+                this.oldAnswers.push(textArray[this.newAns][1])
+                i++
+            }
+        }
+        shuffle(this.randV)
+        for (let i = 0; i < butts.length; i++) {
+            butts[i].innerHTML = this.randV[i]
+        }
+    }
+}
+
+
 // this function changes display style for objects in brackets
 function displayObj(objects, toD) {
     for (let i = 0; i < objects.length; i++) {
@@ -72,7 +114,6 @@ start.addEventListener("click", function () {
     }
     console.log(textArray)
     displayObj([mainInput, start, split1], "none")
-    displayObj([base], "flex")
     base.style.display = "flex"
     thisQ.displayques();
     return textArray;
@@ -88,43 +129,6 @@ function displayStat() {
 }
 
 
-//this is a class for question
-class QUESTION {
-    constructor() {
-        this.randI = 0
-        this.txtA = textArray
-        this.randV = []
-        this.oldAnswers = []
-        this.oldQuestions = []
-        this.newAns = 0
-    }
-    displayques() {
-        let i = 0
-        while (i != 1) {
-            this.randI = Math.floor(Math.random() * this.txtA.length)
-            if (this.oldQuestions.includes(this.randI) == false) {
-                mainq.innerHTML = this.txtA[this.randI][0]
-                this.oldQuestions.push(this.randI)
-            i = 1
-            }
-        }
-        i = 0
-        this.randV = [this.txtA[this.randI][1]]
-        while (i != 3) {
-            this.newAns = Math.floor(Math.random() * this.txtA.length)
-            if (this.oldAnswers.includes(this.txtA[this.newAns][1]) == false) {
-                this.randV.push(this.txtA[this.newAns][1])
-                this.oldAnswers.push(this.txtA[this.newAns][1])
-                i++
-            }
-        }
-        shuffle(this.randV)
-        for (let i = 0; i < butts.length; i++) {
-            butts[i].innerHTML = this.randV[i]
-        }
-        console.log(randV)
-    }
-}
 
 displayObj([base, stat, split2], "none")
 thisQ = new QUESTION()
