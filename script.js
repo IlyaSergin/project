@@ -12,7 +12,6 @@ let allCookie = document.cookie.split("; ")
 let cookieflag = false
 let textArray = []
 
-
 // this function is for coockies
 function cookieF() {
     allCookie = document.cookie.split("; ")
@@ -72,10 +71,11 @@ class QUESTION {
 }
 
 
+
 // this function changes display style for objects in brackets
 function displayObj(objects, toD) {
     for (let i = 0; i < objects.length; i++) {
-        objects[i].style.display = "none"
+        objects[i].style.display = toD
     }
 }
 
@@ -109,7 +109,7 @@ start.addEventListener("click", function () {
     }
     console.log(textArray)
     displayObj([mainInput, start, split1], "none")
-    base.style.display = "flex"
+    displayObj([base], "block")
     thisQ.displayques();
     return textArray;
 })
@@ -121,6 +121,8 @@ function displayStat() {
     stat.innerHTML = `Ваш результат: ${Math.round(rightA / allA * 100)}% \n Правильно: ${rightA} из ${allA}`
     start.innerHTML = "НАЧАТЬ"
     displayObj([stat, start], "block")
+    base.style.display = "none"
+    console.log(stat, start)
 }
 
 
@@ -129,15 +131,19 @@ displayObj([base, stat], "none")
 thisQ = new QUESTION()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
-        if (butts[i].innerHTML == thisQ.textArray[thisQ.randI][1]) {
-            rightA++
+        if (allA < textArray.length - 1) {
+            if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
+                rightA++
+            }
+            allA++
+            thisQ.displayques()
         }
-        allA++
-        thisQ.displayques()
+        else{
+            displayStat()
+        }
     }
     )
 }
-
 /*
 
 a - b
@@ -148,7 +154,6 @@ i - j
 k - l
 m - n
 o - p
-
 
 
 */
