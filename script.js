@@ -5,7 +5,6 @@ let start = document.querySelector(".start")
 let base = document.querySelector(".base")
 let mainInput = document.querySelector(".mainInput")
 let split1 = document.querySelector(".split1")
-let split2 = document.querySelector(".split2")
 let thisQ
 let rightA = 0
 let allA = 0
@@ -102,11 +101,7 @@ function shuffle(array) {
 
 //this function is for inputs
 start.addEventListener("click", function () {
-    //console.log(split1.value + split2.value)
-    //   textArray = mainInput.value
-    textArray = "a - b\nc - d\ne - f\ng - h\ni - j\nk - l\nm - n\no - p"
-    //let split_2 = split2.value
-    //textArray = textArray.split(`${split_2}`)
+    textArray = mainInput.value
     textArray = textArray.split("\n")
     console.log(textArray)
     for (let i = 0; i < textArray.length; i++) {
@@ -130,7 +125,7 @@ function displayStat() {
 
 
 
-displayObj([base, stat, split2], "none")
+displayObj([base, stat], "none")
 thisQ = new QUESTION()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
