@@ -25,10 +25,11 @@ body {
 }
 
 .var {
-    height: 30px;
-    width: 100%;
-    border-radius: 3px;
-    border: 3px solid black;
+    padding: 15px 0px;
+    max-width: 98%;
+    border-radius: 6px;
+    border: 3px solid rgba(0, 0, 0, 0.215);
+    text-align: center;
 }
 
 .variants {
@@ -38,28 +39,31 @@ body {
 
 input::placeholder {
     font-size: 40px;
-    padding: 10px 0px 0px 10px;
+    padding-top: 10px;
 }
 
 input {
-    width: 98%;
+    width: 97%;
     min-height: 50px;
     border-radius: 25px;
+    padding-left: 15px;
 }
 
 textarea::placeholder {
     font-size: 40px;
-    padding: 10px 0px 0px 10px;
+    padding-top: 10px;
 }
 
 textarea {
-    width: 98%;
-    min-height: 50px;
+    width: 97%;
     border-radius: 25px;
+    min-height: 50vh;
+    resize: vertical;
+    padding-left: 15px;
 }
 
 .all {
-    max-width: 95%;
+    width: 95%;
     border-radius: 25px;
     background-color: whitesmoke;
     margin-top: 5px;
@@ -71,6 +75,14 @@ textarea {
     border: 3px solid black;
     background-color: rgb(190, 190, 190);
     border-radius: 25px;
+}
+
+.base {
+    min-width: 90%;
+}
+
+.ques {
+    text-align: center;
 }
 
 @media(max-width: 500px) {
@@ -85,23 +97,26 @@ textarea {
     }
 
     input {
-        width: 94%;
+        width: 89%;
         min-height: 30px;
         border-radius: 10px;
     }
 
     textarea {
-        max-width: 94%;
+        max-width: 89%;
         min-height: 30px;
         border-radius: 10px;
     }
-    .bigText{
+
+    .bigText {
         font-size: 20px;
     }
-    .text{
+
+    .text {
         font-size: 10px;
     }
 }
+
 @media(min-width: 501px) and (max-width: 768px) {
     textarea::placeholder {
         font-size: 25px;

@@ -11,7 +11,7 @@ let allA = 0
 let allCookie = document.cookie.split("; ")
 let cookieflag = false
 let textArray = []
-
+let textHeight = []
 // this function is for coockies
 function cookieF() {
     allCookie = document.cookie.split("; ")
@@ -98,20 +98,49 @@ function shuffle(array) {
 }
 
 
+mainInput.addEventListener("keypress", function(e){
+    if (e.key == "Enter"){
+        textHeight = mainInput.value
+        textHeight = textHeight.split("\n")
+        console.log(textHeight, textHeight.length)
+        if(textHeight.length > 4){
+            mainInput.style.minHeight = `${8.33333 * textHeight.length + 10}vh`
+        }
+    }
+})
+
 
 //this function is for inputs
 start.addEventListener("click", function () {
-    textArray = mainInput.value
-    textArray = textArray.split("\n")
-    console.log(textArray)
-    for (let i = 0; i < textArray.length; i++) {
-        textArray[i] = textArray[i].split(split1.value)
+    if (start.innerHTML == "ГОТОВО") {
+        textArray = mainInput.value
+        textArray = textArray.split("\n")
+        if (textArray.length > 3 && split1.value.length > 0) {
+            console.log(textArray)
+            for (let i = 0; i < textArray.length; i++) {
+                textArray[i] = textArray[i].split(split1.value)
+            }
+            console.log(textArray)
+            displayObj([mainInput, start, split1], "none")
+            displayObj([base], "block")
+            thisQ.displayques();
+            return textArray;
+        }
+        if (textArray.length < 4) {
+            mainInput.placeholder = "Введите более 4 пар!"
+        }
+        if (split1.value.length == 0) {
+            split1.placeholder = "Введите разделитель термина и перевода!"
+        }
     }
-    console.log(textArray)
-    displayObj([mainInput, start, split1], "none")
-    displayObj([base], "block")
-    thisQ.displayques();
-    return textArray;
+    else {
+        thisQ = new QUESTION()
+        displayObj([base], "block")
+        thisQ.displayques();
+        displayObj([stat, start], "none")
+        allA = 0
+        rightA = 0
+    }
 })
 
 
@@ -119,12 +148,11 @@ start.addEventListener("click", function () {
 //this function display statistics
 function displayStat() {
     stat.innerHTML = `Ваш результат: ${Math.round(rightA / allA * 100)}% \n Правильно: ${rightA} из ${allA}`
-    start.innerHTML = "НАЧАТЬ"
+    start.innerHTML = "НАЧАТЬ ЗАНОВО"
     displayObj([stat, start], "block")
     base.style.display = "none"
     console.log(stat, start)
 }
-
 
 
 displayObj([base, stat], "none")
@@ -138,7 +166,7 @@ for (let i = 0; i < butts.length; i++) {
             allA++
             thisQ.displayques()
         }
-        else{
+        else {
             displayStat()
         }
     }
