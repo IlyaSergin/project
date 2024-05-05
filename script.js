@@ -67,6 +67,7 @@ class QUESTION {
         for (let i = 0; i < butts.length; i++) {
             butts[i].innerHTML = this.randV[i]
         }
+        allA++
     }
 }
 
@@ -98,12 +99,12 @@ function shuffle(array) {
 }
 
 
-mainInput.addEventListener("keypress", function(e){
-    if (e.key == "Enter"){
+mainInput.addEventListener("keypress", function (e) {
+    if (e.key == "Enter") {
         textHeight = mainInput.value
         textHeight = textHeight.split("\n")
         console.log(textHeight, textHeight.length)
-        if(textHeight.length > 4){
+        if (textHeight.length > 4) {
             mainInput.style.minHeight = `${8.33333 * textHeight.length + 10}vh`
         }
     }
@@ -135,11 +136,11 @@ start.addEventListener("click", function () {
     }
     else {
         thisQ = new QUESTION()
+        rightA = 0
+        allA = 0
         displayObj([base], "block")
         thisQ.displayques();
         displayObj([stat, start], "none")
-        allA = 0
-        rightA = 0
     }
 })
 
@@ -163,7 +164,6 @@ for (let i = 0; i < butts.length; i++) {
             if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
                 rightA++
             }
-            allA++
             thisQ.displayques()
         }
         else {
