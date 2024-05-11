@@ -15,7 +15,6 @@ let textHeight = []
 // this function is for coockies
 console.log(document.cookie)
 function cookieF() {
-    console.log("cookieF")
     for (let i = 0; i < document.cookie.split("; ").length; i++) {
         if (document.cookie.split("; ")[i].split("=")[0] == "lastS") {
             cookieflag = true
@@ -23,7 +22,7 @@ function cookieF() {
         }
     }
     if (cookieflag == false) {
-        document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
+        document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}; max-age=99999999;`
     }
     for (let i = 0; i < document.cookie.split("; ").length; i++) {
         if (document.cookie.split("; ")[i].split("=")[0] == "lastM") {
@@ -108,16 +107,13 @@ function shuffle(array) {
 
 mainInput.addEventListener("keydown", function (e) {
     textHeight = mainInput.value
-    console.log(textHeight)
     textHeight = textHeight.split("\n")
-    console.log(textHeight, textHeight.length)
     if (e.key == "Enter") {
         if (textHeight.length > 4) {
             mainInput.style.height = `${8.33333 * textHeight.length + 10}vh`
         }
     }
     else if (e.keyCode == 8) {
-        console.log("delete")
         if (textHeight.length > 4) {
             mainInput.style.height = `${8.33333 * (textHeight.length - 1) + 10}vh`
         }
@@ -131,11 +127,9 @@ start.addEventListener("click", function () {
         textArray = mainInput.value
         textArray = textArray.split("\n")
         if (textArray.length > 3 && split1.value.length > 0) {
-            console.log(textArray)
             for (let i = 0; i < textArray.length; i++) {
                 textArray[i] = textArray[i].split(split1.value)
             }
-            console.log(textArray)
             displayObj([mainInput, start, split1], "none")
             displayObj([base], "block")
             thisQ.displayques();
@@ -147,7 +141,7 @@ start.addEventListener("click", function () {
                 }
             }
             if (cookieflag2 == false) {
-                document.cookie = `lastM=${mainInput.value}###${split1.value}`
+                document.cookie = `lastM=${mainInput.value}###${split1.value}; max-age=99999999;`
             }
 
             setTimeout(function(){console.log(document.cookie)}, 100);
