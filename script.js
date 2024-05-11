@@ -8,24 +8,31 @@ let split1 = document.querySelector(".split1")
 let thisQ
 let rightA = 0
 let allA = 0
-let allCookie = document.cookie.split("; ")
 let cookieflag = false
+let cookieflag2 = false
 let textArray = []
 let textHeight = []
 // this function is for coockies
+console.log(document.cookie)
 function cookieF() {
-    allCookie = document.cookie.split("; ")
-    for (let i = 0; i < allCookie.length; i++) {
-        if (allCookie[i].split("=")[0] == "lastS") {
+    console.log("cookieF")
+    for (let i = 0; i < document.cookie.split("; ").length; i++) {
+        if (document.cookie.split("; ")[i].split("=")[0] == "lastS") {
             cookieflag = true
-            allCookie[i].split("=")[1] = `Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
+            document.cookie.split("; ")[i].split("=")[1] = `Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
         }
     }
     if (cookieflag == false) {
         document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
     }
+    for (let i = 0; i < document.cookie.split("; ").length; i++) {
+        if (document.cookie.split("; ")[i].split("=")[0] == "lastM") {
+            mainInput.value = document.cookie.split("; ")[i].split("=")[1].split("###")[0]
+            split1.value = document.cookie.split("; ")[i].split("=")[1].split("###")[1]
+        }
+    }
 }
-cookieF()
+cookieF();
 
 
 
@@ -99,19 +106,26 @@ function shuffle(array) {
 }
 
 
-mainInput.addEventListener("keypress", function (e) {
+mainInput.addEventListener("keydown", function (e) {
+    textHeight = mainInput.value
+    console.log(textHeight)
+    textHeight = textHeight.split("\n")
+    console.log(textHeight, textHeight.length)
     if (e.key == "Enter") {
-        textHeight = mainInput.value
-        textHeight = textHeight.split("\n")
-        console.log(textHeight, textHeight.length)
         if (textHeight.length > 4) {
-            mainInput.style.minHeight = `${8.33333 * textHeight.length + 10}vh`
+            mainInput.style.height = `${8.33333 * textHeight.length + 10}vh`
+        }
+    }
+    else if (e.keyCode == 8) {
+        console.log("delete")
+        if (textHeight.length > 4) {
+            mainInput.style.height = `${8.33333 * (textHeight.length - 1) + 10}vh`
         }
     }
 })
 
 
-//this function is for inputs
+//this function is for start button
 start.addEventListener("click", function () {
     if (start.innerHTML == "ГОТОВО") {
         textArray = mainInput.value
@@ -125,6 +139,18 @@ start.addEventListener("click", function () {
             displayObj([mainInput, start, split1], "none")
             displayObj([base], "block")
             thisQ.displayques();
+
+            for (let i = 0; i < document.cookie.split("; ").length; i++) {
+                if (document.cookie.split("; ")[i].split("=")[0] == "lastM") {
+                    cookieflag2 = true
+                    document.cookie.split("; ")[i].split("=")[1] = `${mainInput.value}###${split1.value}`
+                }
+            }
+            if (cookieflag2 == false) {
+                document.cookie = `lastM=${mainInput.value}###${split1.value}`
+            }
+
+            setTimeout(function(){console.log(document.cookie)}, 100);
             return textArray;
         }
         if (textArray.length < 4) {

@@ -136,7 +136,7 @@ textarea {
 
     textarea {
         max-width: 94%;
-        min-height: 40px;
+        min-height: 100px;
         border-radius: 15px;
     }
 
