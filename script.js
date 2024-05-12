@@ -7,31 +7,55 @@ let mainInput = document.querySelector(".mainInput")
 let split1 = document.querySelector(".split1")
 let thisQ
 let rightA = 0
-let allA = 0
+let allA = 1
 let cookieflag = false
 let cookieflag2 = false
 let textArray = []
 let textHeight = []
+let cookieText = ""
+let cookieText2 = ""
 // this function is for coockies
 console.log(document.cookie)
 function cookieF() {
-    for (let i = 0; i < document.cookie.split("; ").length; i++) {
-        if (document.cookie.split("; ")[i].split("=")[0] == "lastS") {
+    for (let i = 0; i < document.cookie.split(";").length; i++) {
+        if (document.cookie.split(";")[i].split("=")[0] == "lastS") {
             cookieflag = true
-            document.cookie.split("; ")[i].split("=")[1] = `Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
+            document.cookie = `${document.cookie.split(";")[i].split("=")[0]}=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
         }
     }
     if (cookieflag == false) {
         document.cookie = `lastS=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}; max-age=99999999;`
     }
-    for (let i = 0; i < document.cookie.split("; ").length; i++) {
-        if (document.cookie.split("; ")[i].split("=")[0] == "lastM") {
-            mainInput.value = document.cookie.split("; ")[i].split("=")[1].split("###")[0]
-            split1.value = document.cookie.split("; ")[i].split("=")[1].split("###")[1]
+}
+function cookieF2() {
+    for (let i = 0; i < document.cookie.split(";").length; i++) {
+        if (document.cookie.split(";")[i].split("=")[0] == "lastM") {
+            cookieflag2 = true
+            for (let i = 0; i < mainInput.value.split("\n").length; i++) {
+                cookieText += `${mainInput.value.split("\n")[i]}%`
+            }
+            cookieText = cookieText.slice(0, -1)
+            document.cookie = `lastM=${cookieText}_${split1.value}; max-age=99999999;`
+        }
+    }
+    if (cookieflag2 == false) {
+        document.cookie = `lastM=${cookieText}_${split1.value}; max-age=99999999;`
+    }
+}
+function cookieF3() {
+    for (let ii = 0; ii < document.cookie.split(";").length; ii++) {
+        if (document.cookie.split(";")[ii].split("=")[0] == "lastM") {
+            for (let i = 0; i < document.cookie.split(";")[ii].split("=")[1].split("_")[0].split("%").length; i++) {
+                cookieText2 += `${document.cookie.split(";")[ii].split("=")[1].split("_")[0].split("%")[i]}\n`
+            }
+            split1.value = document.cookie.split(";")[ii].split("=")[1].split("_")[1]
+            cookieText2 = cookieText2.slice(0, -1) 
+            mainInput.value = cookieText2
         }
     }
 }
 cookieF();
+cookieF3();
 
 
 
@@ -73,7 +97,6 @@ class QUESTION {
         for (let i = 0; i < butts.length; i++) {
             butts[i].innerHTML = this.randV[i]
         }
-        allA++
     }
 }
 
@@ -125,26 +148,17 @@ mainInput.addEventListener("keydown", function (e) {
 start.addEventListener("click", function () {
     if (start.innerHTML == "ГОТОВО") {
         textArray = mainInput.value
+        console.log(textArray)
         textArray = textArray.split("\n")
         if (textArray.length > 3 && split1.value.length > 0) {
+            cookieF2()
             for (let i = 0; i < textArray.length; i++) {
                 textArray[i] = textArray[i].split(split1.value)
             }
             displayObj([mainInput, start, split1], "none")
             displayObj([base], "block")
             thisQ.displayques();
-
-            for (let i = 0; i < document.cookie.split("; ").length; i++) {
-                if (document.cookie.split("; ")[i].split("=")[0] == "lastM") {
-                    cookieflag2 = true
-                    document.cookie.split("; ")[i].split("=")[1] = `${mainInput.value}###${split1.value}`
-                }
-            }
-            if (cookieflag2 == false) {
-                document.cookie = `lastM=${mainInput.value}###${split1.value}; max-age=99999999;`
-            }
-
-            setTimeout(function(){console.log(document.cookie)}, 100);
+            setTimeout(function () { console.log(document.cookie) }, 100);
             return textArray;
         }
         if (textArray.length < 4) {
@@ -157,7 +171,7 @@ start.addEventListener("click", function () {
     else {
         thisQ = new QUESTION()
         rightA = 0
-        allA = 0
+        allA = 1
         displayObj([base], "block")
         thisQ.displayques();
         displayObj([stat, start], "none")
@@ -180,15 +194,21 @@ displayObj([base, stat], "none")
 thisQ = new QUESTION()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
-        if (allA < textArray.length - 1) {
+        if (allA < textArray.length) {
             if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
                 rightA++
             }
             thisQ.displayques()
         }
         else {
+            if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
+                rightA++
+            }
             displayStat()
+            cookieF()
         }
+        console.log(rightA, allA)
+        allA++
     }
     )
 }
