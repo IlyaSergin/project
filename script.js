@@ -15,12 +15,15 @@ let textHeight = []
 let cookieText = ""
 let cookieText2 = ""
 // this function is for coockies
+
 console.log(document.cookie)
+let dcs = document.cookie.split(";")
 function cookieF() {
-    for (let i = 0; i < document.cookie.split(";").length; i++) {
-        if (document.cookie.split(";")[i].split("=")[0] == "lastS") {
+    dcs = document.cookie.split(";")
+    for (let i = 0; i < dcs.length; i++) {
+        if (dcs[i].split("=")[0] == "lastS") {
             cookieflag = true
-            document.cookie = `${document.cookie.split(";")[i].split("=")[0]}=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
+            document.cookie = `${dcs[i].split("=")[0]}=Ваш последний результат: ${Math.round(rightA / allA * 100)}%. Правильно: ${rightA} из ${allA}`
         }
     }
     if (cookieflag == false) {
@@ -28,31 +31,42 @@ function cookieF() {
     }
 }
 function cookieF2() {
-    for (let i = 0; i < document.cookie.split(";").length; i++) {
-        if (document.cookie.split(";")[i].split("=")[0] == "lastM") {
+    dcs = document.cookie.split(";")
+    cookieText = ""
+    for (let i = 0; i < dcs.length; i++) {
+        if (dcs[i].split("=")[0] == "lastMM") {
             cookieflag2 = true
             for (let i = 0; i < mainInput.value.split("\n").length; i++) {
-                cookieText += `${mainInput.value.split("\n")[i]}%`
+                cookieText += mainInput.value.split("\n")[i]
+                cookieText += "%"
             }
             cookieText = cookieText.slice(0, -1)
-            document.cookie = `lastM=${cookieText}_${split1.value}; max-age=99999999;`
+            document.cookie = `lastMM=${cookieText}_${split1.value}; max-age=99999999;`
         }
     }
     if (cookieflag2 == false) {
-        document.cookie = `lastM=${cookieText}_${split1.value}; max-age=99999999;`
+        for (let i = 0; i < mainInput.value.split("\n").length; i++) {
+            cookieText += mainInput.value.split("\n")[i]
+            cookieText += "%"
+        }
+        cookieText = cookieText.slice(0, -1)
+        document.cookie = `lastMM=${cookieText}_${split1.value}; max-age=99999999;`
     }
 }
 function cookieF3() {
-    for (let ii = 0; ii < document.cookie.split(";").length; ii++) {
-        if (document.cookie.split(";")[ii].split("=")[0] == "lastM") {
-            for (let i = 0; i < document.cookie.split(";")[ii].split("=")[1].split("_")[0].split("%").length; i++) {
-                cookieText2 += `${document.cookie.split(";")[ii].split("=")[1].split("_")[0].split("%")[i]}\n`
+    dcs = document.cookie.split(";")
+    cookieText2 = ""
+    for (let i = 0; i < dcs.length; i++) {
+        if (dcs[i].includes("lastMM") == true) {
+            for (let k = 0; k < dcs[i].split("=")[1].split("_")[0].split("%").length; k++) {
+                cookieText2 += `${dcs[i].split("=")[1].split("_")[0].split("%")[k]}\n`
+                console.log(cookieText2)
             }
-            split1.value = document.cookie.split(";")[ii].split("=")[1].split("_")[1]
-            cookieText2 = cookieText2.slice(0, -1) 
-            mainInput.value = cookieText2
+            split1.value = dcs[i].split("=")[1].split("_")[1]
+            mainInput.value = cookieText2.slice(0, -1)
         }
     }
+
 }
 cookieF();
 cookieF3();
