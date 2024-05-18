@@ -14,6 +14,7 @@ let textArray = []
 let textHeight = []
 let cookieText = ""
 let cookieText2 = ""
+let clickBool = true
 // this function is for coockies
 
 console.log(document.cookie)
@@ -208,21 +209,34 @@ displayObj([base, stat], "none")
 thisQ = new QUESTION()
 for (let i = 0; i < butts.length; i++) {
     butts[i].addEventListener("click", function () {
-        if (allA < textArray.length) {
-            if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
-                rightA++
+        if (clickBool == true) {
+            if (allA < textArray.length) {
+                if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
+                    rightA++
+                    butts[i].style.borderColor = "green"
+                    clickBool = false;
+                }
+                else {
+                    butts[i].style.borderColor = "red"
+                    clickBool = false;
+                }
+                setTimeout(function () { thisQ.displayques(); butts[i].style.borderColor = "lightgray"; clickBool = true; }, 2000)
             }
-            thisQ.displayques()
-        }
-        else {
-            if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
-                rightA++
+            else {
+                if (butts[i].innerHTML == textArray[thisQ.randI][1]) {
+                    rightA++
+                    butts[i].style.borderColor = "green"
+                    clickBool = false;
+                }
+                else {
+                    butts[i].style.borderColor = "red"
+                    clickBool = false;
+                }
+                setTimeout(function () { displayStat(); cookieF(); butts[i].style.borderColor = "lightgray"; clickBool = true;}, 2000)
             }
-            displayStat()
-            cookieF()
+            console.log(rightA, allA)
+            allA++
         }
-        console.log(rightA, allA)
-        allA++
     }
     )
 }
